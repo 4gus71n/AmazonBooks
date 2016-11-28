@@ -1,0 +1,89 @@
+apply plugin: 'com.android.application'
+
+buildscript {
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+    dependencies {
+        // replace with the current version of the Android plugin
+        classpath 'com.android.tools.build:gradle:2.2.1'
+        // the latest version of the android-apt plugin
+        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+    }
+}
+
+android {
+    compileSdkVersion 24
+    buildToolsVersion "23.0.1"
+
+    defaultConfig {
+        applicationId "com.si.thumbnailapp"
+        minSdkVersion 15
+        targetSdkVersion 24
+        versionCode 1
+        versionName "1.0"
+    }
+
+    buildTypes {
+        debug {
+            buildConfigField "String", "BASE_HOST", "\"http://de-coding-test.s3.amazonaws.com/\""
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "BASE_HOST", "\"http://de-coding-test.s3.amazonaws.com/\""
+        }
+    }
+
+    dexOptions {
+        incremental true
+    }
+}
+
+apply plugin: 'com.neenbedankt.android-apt'
+
+dependencies {
+    apt 'com.soundcloud.lightcycle:lightcycle-processor:1.1.0'
+    apt 'com.jakewharton:butterknife-compiler:8.2.1'
+    apt "com.squareup.dagger:dagger-compiler:1.2.2"
+
+    testCompile 'org.khronos:opengl-api:gl1.1-android-2.1_r1'
+
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    testCompile 'junit:junit:4.12'
+    compile 'com.android.support:appcompat-v7:24.0.0'
+
+    //Dependency injection library
+    compile "com.squareup.dagger:dagger:1.2.2"
+    //Allows us to detach the Fragment/Activities lifecycle methods in decoupled classes
+    compile 'com.soundcloud.lightcycle:lightcycle-lib:1.1.0'
+    //Allows us to avoid all the findViewById boilerplate code
+    compile 'com.jakewharton:butterknife:8.2.1'
+
+    //Image caching library
+    compile 'com.github.bumptech.glide:glide:3.7.0'
+
+    //Robolectric dependencies
+    testCompile "org.robolectric:robolectric:3.1.2"
+    //Mockito dependencies
+    testCompile "org.mockito:mockito-core:1.+"
+
+    //region Support libraries
+    compile 'com.android.support:appcompat-v7:24.0.0'
+    compile 'com.android.support:support-v4:24.0.0'
+    compile 'com.android.support:design:24.0.0'
+    //endregion
+
+    //region Retrofit + RxJava
+    compile 'com.google.code.gson:gson:2.6.2'
+    compile 'com.squareup.retrofit2:retrofit:2.1.0'
+    compile 'com.squareup.retrofit2:converter-gson:2.1.0'
+
+    compile 'io.reactivex:rxjava:1.1.6'
+    compile 'io.reactivex:rxandroid:1.2.1'
+    compile 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
+
+    compile 'com.squareup.okhttp3:logging-interceptor:3.3.0'
+    //endregion
+}

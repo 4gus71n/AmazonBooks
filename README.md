@@ -1,2 +1,1 @@
-# AmazonBooks
-Simple code challenge
+# Amazon Books

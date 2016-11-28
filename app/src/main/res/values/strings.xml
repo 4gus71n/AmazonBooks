@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Amazon Books</string>
+    <string name="empty_books_collection">There\'s no books right now!</string>
+</resources>
